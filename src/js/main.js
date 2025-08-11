@@ -1,1 +1,1 @@
-import "@/js/sections/";
+import '@/js/sections/custom-product-may-run';

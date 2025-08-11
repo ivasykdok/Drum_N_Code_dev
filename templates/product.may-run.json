@@ -1,0 +1,51 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "custom-product-may-run": {
+      "type": "custom-product-may-run",
+      "blocks": {
+        "block_product_title_zFrVWD": {
+          "type": "block-product-title",
+          "settings": {}
+        },
+        "block_product_descr_qRpFMt": {
+          "type": "block-product-descr",
+          "settings": {}
+        },
+        "block_product_variants_DaXpfW": {
+          "type": "block-product-variants",
+          "settings": {}
+        },
+        "customer_information_RJkTrA": {
+          "type": "customer-information",
+          "settings": {}
+        },
+        "pay_buttons_y6dgRC": {
+          "type": "pay-buttons",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "block_product_title_zFrVWD",
+        "block_product_descr_qRpFMt",
+        "block_product_variants_DaXpfW",
+        "customer_information_RJkTrA",
+        "pay_buttons_y6dgRC"
+      ],
+      "settings": {
+        "media_width": 600
+      }
+    }
+  },
+  "order": [
+    "custom-product-may-run"
+  ]
+}

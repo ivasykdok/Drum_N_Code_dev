@@ -1,0 +1,21 @@
+{% assign custom_dropdown_show = block.settings.custom-dropdown-show %}
+
+<select-variants>
+  <div class="options my-8 {% if custom_dropdown_show -%}hide{%- endif -%}">
+    {% for option in product.options_with_values %}
+      <div class="option-wrapper">
+        <label for="option{{ option.position }}" class="border-b">{{ option
+          .name }}</label>
+        <select class="select-options cursor-pointer"
+                id="option{{
+                option
+                .position }}">
+          {% for value in option.values %}
+            <option value="{{ value }}" >{{ value
+              }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    {% endfor %}
+  </div>
+</select-variants>

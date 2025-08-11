@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack --watch",
     "build": "cross-env NODE_ENV=production webpack",
-    "dev:theme": "yarn dev & shopify theme dev",
+    "dev:theme": "yarn dev & node scripts/dev-theme.js",
     "logout": "shopify logout",
-    "pull": "node scripts/pull-theme.js",
+    "pull": "node scripts/pull-theme.js`",
     "format": "prettier --write \"src/**/*.{js,json,scss,css,liquid}\"",
     "format:check": "prettier --check \"src/**/*.{js,json,scss,css,liquid}\"",
     "lint": "eslint src/js",
@@ -44,11 +44,14 @@
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.28.0",
     "@babel/preset-react": "^7.27.1",
+    "@babel/runtime": "^7.28.2",
     "@shopify/theme-sections": "^4.1.1",
     "@tailwindcss/postcss": "^4.1.11",
+    "daisyui": "^5.0.50",
     "dotenv": "^17.2.1",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "style-loader": "^4.0.0"
   },
   "browserslist": [
     "last 2 versions",

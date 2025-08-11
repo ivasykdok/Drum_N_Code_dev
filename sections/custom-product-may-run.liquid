@@ -1,0 +1,108 @@
+
+{% assign section_se = section.settings %}
+{% assign aspect_ratio = 1.5 %}
+{% assign media_width = section_se.media_width %}
+{% assign media_height = section_se.media_width | divided_by: aspect_ratio |
+  floor %}
+{% assign blocks = section.blocks %}
+{% capture widths %}{{ media_width }},{{ media_width |
+times: 2.5 | round }},{{ media_width |
+times: 3.5 | round }}{%
+  endcapture %}
+
+{% capture sizes %}(max-width: {{- media_width | times: 3 -}}px)50vw, {{-
+media_width -}}px{% endcapture %}
+
+<div id="component-may-run" class="component-may-run grid grid-cols-1 gap-6 md:grid-cols-2">
+  <div class="product-images">
+    {% for media in product.media %}
+      {{ media.src | image_url: width: media_width | image_tag:
+      widths: widths, preload:
+      true, sizes: sizes, height: media_height, width: media_width, data-id:
+      media.id, class: "product-media w-full aspect-square object-cover hide" }}
+    {% endfor %}
+  </div>
+
+  <div class="product-info">
+    {% for block in blocks %}
+      {% case block.type %}
+        {% when 'block-product-title' %}
+          <h2 class="title flex justify-between mb-8 text-3xl font-bold">
+            {{ product.title }}
+
+            <span class="price" data-symbol="{{ '0.00' |
+            money_without_trailing_zeros }}">{{ '0' }}</span>
+          </h2>
+
+        {% when 'block-product-descr' %}
+          <div class="description">{{ product.description }}</div>
+
+        {% when 'block-product-variants' %}
+          {% render 'custom-select-options' %}
+
+        {% when 'customer-information' %}
+        <div class="wrapper flex flex-col lg:flex-row">
+          {% render 'more-user-information' %}
+          {% render 'error-message', class: 'hide' %}
+        </div>
+
+        {% when 'pay-buttons' %}
+          {% render 'custom-add-buttons' %}
+
+      {% endcase %}
+    {% endfor %}
+  </div>
+</div>
+
+<script id="product-data" type="application/json">
+  {{ product | json }}
+</script>
+
+{% schema %}
+{
+  "name": "Main May Run",
+  "settings": [
+    {
+      "type": "range",
+      "id": "media_width",
+      "label": "Width Product Image",
+      "default": 600,
+      "min": 200,
+      "max": 900,
+      "step": 10
+    }
+  ],
+  "blocks": [
+    {
+      "type": "block-product-title",
+      "name": "Product title",
+      "limit": 1,
+      "settings": []
+    },
+    {
+      "type": "block-product-descr",
+      "name": "Product description",
+      "limit": 1,
+      "settings": []
+    },
+    {
+      "type": "block-product-variants",
+      "name": "Product variants",
+      "limit": 1,
+      "settings": []
+    },
+    {
+      "type": "pay-buttons",
+      "name": "Pay buttons",
+      "limit": 1,
+      "settings": []
+    },
+    {
+      "type": "customer-information",
+      "name": "Customer information",
+      "limit": 1,
+      "settings": []
+    }
+  ]
+}
+{% endschema %}

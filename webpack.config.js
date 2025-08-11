@@ -10,7 +10,9 @@ module.exports = {
   entry: {
     bundle: [
       path.resolve(__dirname, 'src', 'js', 'main.js'),
-      path.resolve(__dirname, 'src', 'scss', 'main.scss')
+/*      path.resolve(__dirname, 'src', 'css', 'main.css'),*/
+      path.resolve(__dirname, 'src', 'css', 'tailwint.css'),
+      path.resolve(__dirname, 'src', 'scss', 'main.scss'),
     ]
   },
   output: {
@@ -23,11 +25,53 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader'
+          loader: 'babel-loader',
         }
       },
       {
-        test: /\.s?css$/,
+        test: /\.css$/,
+        oneOf: [
+          {
+            resource: path.resolve(__dirname, 'src', 'css', 'tailwint.css'),
+            use: [
+              MiniCssExtractPlugin.loader,
+              'css-loader',
+              {
+                loader: 'postcss-loader',
+                options: {
+                  postcssOptions: {
+                    plugins: [
+                      require('@tailwindcss/postcss'),
+                      autoprefixer(),
+                      ...(isProduction ? [CssNano()] : []),
+                    ],
+                  },
+                },
+              },
+            ],
+          },
+          {
+            use: [
+              MiniCssExtractPlugin.loader,
+              'css-loader',
+              {
+                loader: 'postcss-loader',
+                options: {
+                  postcssOptions: {
+                    plugins: [
+                      postcssSortMediaQueries(),
+                      autoprefixer(),
+                      ...(isProduction ? [CssNano()] : []),
+                    ],
+                  },
+                },
+              },
+            ],
+          },
+        ]
+      },
+      {
+        test: /\.scss$/,
         use: [
           MiniCssExtractPlugin.loader,
           'css-loader',
@@ -35,19 +79,21 @@ module.exports = {
             loader: 'postcss-loader',
             options: {
               postcssOptions: {
-                plugins: isProduction
-                  ? [autoprefixer(), CssNano(), postcssSortMediaQueries()]
-                  : [autoprefixer(), postcssSortMediaQueries()],
+                plugins: [
+                  postcssSortMediaQueries(),
+                  autoprefixer(),
+                  ...(isProduction ? [CssNano()] : []),
+                ],
               },
             },
           },
           'sass-loader',
-        ]
-      }
+        ],
+      },
     ]
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx', 'json'],
+    extensions: ['*', '.js', '.jsx', '.json'],
     alias: {
       "@": path.resolve(__dirname, "./src"),
       "@shopify-directory": path.resolve(__dirname),
@@ -63,4 +109,4 @@ module.exports = {
   watchOptions: {
     ignored: /node_modules/,
   }
-}
+};
